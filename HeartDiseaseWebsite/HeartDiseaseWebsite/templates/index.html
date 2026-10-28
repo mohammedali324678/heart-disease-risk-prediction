@@ -1,0 +1,282 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Disease Risk Prediction</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<header>
+    <h1>Heart Disease Risk Prediction</h1>
+    <p>Enter patient details to predict heart disease risk.</p>
+</header>
+
+<main>
+    <section class="card">
+        <h2>Patient Information</h2>
+
+        <form method="POST">
+            <div class="form-grid">
+
+                <div class="field">
+                    <label for="age">Age</label>
+                    <input id="age" type="number" name="age"
+                           min="1" max="120" required
+                           value="{{ form_data.get('age', '') }}">
+                </div>
+
+                <div class="field">
+                    <label for="sex">Sex</label>
+                    <select id="sex" name="sex" required>
+                        <option value="">Select sex</option>
+                        <option value="male"
+                            {% if form_data.get('sex') == 'male' %}selected{% endif %}>
+                            Male
+                        </option>
+                        <option value="female"
+                            {% if form_data.get('sex') == 'female' %}selected{% endif %}>
+                            Female
+                        </option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="cp">Chest Pain Type</label>
+                    <select id="cp" name="cp" required>
+                        <option value="">Select chest pain type</option>
+                        <option value="typical angina"
+                            {% if form_data.get('cp') == 'typical angina' %}selected{% endif %}>
+                            Typical angina
+                        </option>
+                        <option value="atypical angina"
+                            {% if form_data.get('cp') == 'atypical angina' %}selected{% endif %}>
+                            Atypical angina
+                        </option>
+                        <option value="non-anginal"
+                            {% if form_data.get('cp') == 'non-anginal' %}selected{% endif %}>
+                            Non-anginal pain
+                        </option>
+                        <option value="asymptomatic"
+                            {% if form_data.get('cp') == 'asymptomatic' %}selected{% endif %}>
+                            Asymptomatic
+                        </option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="trestbps">Resting Blood Pressure</label>
+                    <input id="trestbps" type="number" name="trestbps"
+                           min="1" required
+                           value="{{ form_data.get('trestbps', '') }}">
+                </div>
+
+                <div class="field">
+                    <label for="chol">Cholesterol</label>
+                    <input id="chol" type="number" name="chol"
+                           min="0" required
+                           value="{{ form_data.get('chol', '') }}">
+                </div>
+
+                <div class="field">
+                    <label for="fbs">Fasting Blood Sugar Above 120</label>
+                    <select id="fbs" name="fbs" required>
+                        <option value="">Select</option>
+                        <option value="false"
+                            {% if form_data.get('fbs') == 'false' %}selected{% endif %}>
+                            No
+                        </option>
+                        <option value="true"
+                            {% if form_data.get('fbs') == 'true' %}selected{% endif %}>
+                            Yes
+                        </option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="restecg">Resting ECG</label>
+                    <select id="restecg" name="restecg" required>
+                        <option value="">Select resting ECG</option>
+                        <option value="normal"
+                            {% if form_data.get('restecg') == 'normal' %}selected{% endif %}>
+                            Normal
+                        </option>
+                        <option value="st-t abnormality"
+                            {% if form_data.get('restecg') == 'st-t abnormality' %}selected{% endif %}>
+                            ST-T abnormality
+                        </option>
+                        <option value="left ventricular hypertrophy"
+                            {% if form_data.get('restecg') == 'left ventricular hypertrophy' %}selected{% endif %}>
+                            Left ventricular hypertrophy
+                        </option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="thalach">Maximum Heart Rate</label>
+                    <input id="thalach" type="number" name="thalach"
+                           min="1" required
+                           value="{{ form_data.get('thalach', '') }}">
+                </div>
+
+                <div class="field">
+                    <label for="exang">Exercise-Induced Angina</label>
+                    <select id="exang" name="exang" required>
+                        <option value="">Select</option>
+                        <option value="no"
+                            {% if form_data.get('exang') == 'no' %}selected{% endif %}>
+                            No
+                        </option>
+                        <option value="yes"
+                            {% if form_data.get('exang') == 'yes' %}selected{% endif %}>
+                            Yes
+                        </option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="oldpeak">Oldpeak</label>
+                    <input id="oldpeak" type="number" name="oldpeak"
+                           step="any" required
+                           value="{{ form_data.get('oldpeak', '') }}">
+                </div>
+
+                <div class="field">
+                    <label for="slope">ST Segment Slope</label>
+                    <select id="slope" name="slope" required>
+                        <option value="">Select slope</option>
+                        <option value="upsloping"
+                            {% if form_data.get('slope') == 'upsloping' %}selected{% endif %}>
+                            Upsloping
+                        </option>
+                        <option value="flat"
+                            {% if form_data.get('slope') == 'flat' %}selected{% endif %}>
+                            Flat
+                        </option>
+                        <option value="downsloping"
+                            {% if form_data.get('slope') == 'downsloping' %}selected{% endif %}>
+                            Downsloping
+                        </option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="ca">Number of Major Vessels</label>
+                    <select id="ca" name="ca" required>
+                        <option value="">Select number</option>
+                        <option value="0"
+                            {% if form_data.get('ca') == '0' %}selected{% endif %}>
+                            0
+                        </option>
+                        <option value="1"
+                            {% if form_data.get('ca') == '1' %}selected{% endif %}>
+                            1
+                        </option>
+                        <option value="2"
+                            {% if form_data.get('ca') == '2' %}selected{% endif %}>
+                            2
+                        </option>
+                        <option value="3"
+                            {% if form_data.get('ca') == '3' %}selected{% endif %}>
+                            3
+                        </option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="thal">Thal</label>
+                    <select id="thal" name="thal" required>
+                        <option value="">Select thal value</option>
+                        <option value="normal"
+                            {% if form_data.get('thal') == 'normal' %}selected{% endif %}>
+                            Normal
+                        </option>
+                        <option value="fixed defect"
+                            {% if form_data.get('thal') == 'fixed defect' %}selected{% endif %}>
+                            Fixed defect
+                        </option>
+                        <option value="reversible defect"
+                            {% if form_data.get('thal') == 'reversible defect' %}selected{% endif %}>
+                            Reversible defect
+                        </option>
+                    </select>
+                </div>
+
+            </div>
+
+            <button type="submit">Predict Risk</button>
+        </form>
+
+        {% if error %}
+            <div class="error">
+                {{ error }}
+            </div>
+        {% endif %}
+
+        {% if risk_percentage is not none %}
+            <div class="result">
+                <h2>Prediction Result</h2>
+
+                {% if prediction == 1 %}
+                    <p class="result-label">
+                        Model predicts disease present
+                    </p>
+                {% else %}
+                    <p class="result-label">
+                        Model predicts no disease
+                    </p>
+                {% endif %}
+
+                <p class="risk-number">{{ risk_percentage }}%</p>
+                <p>Estimated model risk score</p>
+
+                <div class="progress-container">
+                    <div class="progress-bar"
+                         style="width: {{ risk_percentage }}%;">
+                        {{ risk_percentage }}%
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </section>
+
+    {% if show_graphs %}
+        <section class="card">
+            <h2>Dataset Visualizations</h2>
+
+            <div class="graph">
+                <h3>Heart Disease Distribution</h3>
+                <img
+                    src="{{ url_for('static', filename='target_distribution.png') }}"
+                    alt="Heart Disease Distribution">
+            </div>
+
+            <div class="graph">
+                <h3>Patient Age Distribution</h3>
+                <img
+                    src="{{ url_for('static', filename='age_distribution.png') }}"
+                    alt="Patient Age Distribution">
+            </div>
+        </section>
+    {% endif %}
+
+    <section class="disclaimer">
+        <strong>Disclaimer:</strong>
+        This is an educational machine-learning project, not a medical
+        diagnostic tool. The displayed percentage is a model estimate,
+        not a clinically calibrated probability. Consult a qualified
+        healthcare professional for medical advice.
+    </section>
+</main>
+
+<footer>
+    <p>Heart Disease Prediction Project</p>
+</footer>
+
+</body>
+</html>
